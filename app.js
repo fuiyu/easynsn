@@ -10,7 +10,7 @@ function notFoundContoller(req,res){
 const rules = [
     {path:'/',controller:controllers.home},
     {path:'/user',controller:controllers.user},
-    {path:'/static/',controller:controllers.static}
+    {path:/^\/static(\/.*)/,controller:controllers.static}
 ]
 
 function find(ary, match) {
@@ -21,7 +21,15 @@ function find(ary, match) {
 var server = http.createServer(function(req, res){
     var urlInfo = parseUrl(req.url)
     var rule = find(rules,function(rule){
-        return rule.path == urlInfo.pathname;
+        if(rule.path instanceof RegExp){
+            var macthResult = urlInfo.pathname.match(rule.path)
+            if(macthResult){
+                 req.params = macthResult
+            }
+            return macthResult;
+        }
+            return rule.path == urlInfo.pathname;            
+        
     })
     var controller = rule && rule.controller || notFoundContoller
     controller(req,res)
