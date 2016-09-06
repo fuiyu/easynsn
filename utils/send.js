@@ -2,6 +2,7 @@ const fs = require('fs')
 const mime = require('mime')
 
 module.exports = function(path,res){
+    // 利用fs模块读取文件并作为响应数据
      fs.readFile(path,function(err,data){
         if(err && err.code ==='ENOENT'){
             res.writeHead("404")
