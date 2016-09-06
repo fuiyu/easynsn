@@ -1,21 +1,16 @@
 var http = require('http')
+var controllers = require('./controllers')
 var parseUrl = require('url').parse
 
-function homeController(req,res){
-    res.end('home')
-}
-
-function userController(req,res){
-    res.end('user')
-}
 function notFoundContoller(req,res){
     res.writeHead('404')
     res.end('not found')
     
 }
 const rules = [
-    {path:'/',controller:homeController},
-    {path:'/user',controller:userController},
+    {path:'/',controller:controllers.home},
+    {path:'/user',controller:controllers.user},
+    {path:'/static/',controller:controllers.static}
 ]
 
 function find(ary, match) {
