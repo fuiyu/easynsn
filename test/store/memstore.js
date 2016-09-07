@@ -4,14 +4,13 @@ const MemStore = require('../../store/memstore')
 
 var memStore = new MemStore()
 
-runner([testSet,testGet,testIncr,testDel],function(err){
-    if(err){
-        console.log('err',err.stack)
-    }else{
-        console.log('All done')
-    }
-})
 
+describe('memStore',function(){
+    it('could set',testSet)
+    it('could get',testGet)
+    it('could incr',testIncr)
+    it('could del',testDel)
+})
 function testSet(done){
     memStore.set('foo','bar',function(err, result){
         assert(!err, 'should save without error')

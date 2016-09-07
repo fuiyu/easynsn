@@ -18,5 +18,5 @@ BaseModel.prototype.update = function(id, obj, callback){
 }
 
 BaseModel.prototype.del = function(id, callback){
-    this.store.del(this.prefix + obj.id, callback)    
+    this.store.del(this.prefix + id, callback)    
 }
