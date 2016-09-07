@@ -1,4 +1,4 @@
-const sendFile = require('../utils/send.js')
+const sendFile = require('../utils/send.js').sendFiles
 const joinPath = require('path').join
 // path模块进行路径拼接
 const publicPath = joinPath(__dirname,'../public')

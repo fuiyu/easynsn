@@ -1,7 +1,7 @@
 const fs = require('fs')
 const mime = require('mime')
 
-module.exports = function(path,res){
+exports.sendFiles = function(path,res){
     // 利用fs模块读取文件并作为响应数据
      fs.readFile(path,function(err,data){
         if(err && err.code ==='ENOENT'){
@@ -15,4 +15,17 @@ module.exports = function(path,res){
         res.setHeader('Content-Type',mimeType+(charset?';charset='+charset:''))
         res.end(data)
     })
+}
+
+exports.redirect = function(location,res,statusCode){
+    statusCode = statusCode || 302
+    res.writeHead(statusCode,{
+        location:location
+    })
+    res.end()
+}
+exports.sendError = function(err,res,statusCode){
+    statusCode = statusCode || 500
+    res.writeHead(statusCode)
+    res.end(err,message)
 }
