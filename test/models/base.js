@@ -7,12 +7,7 @@ const memStore = new MemStore()
 const model = new BaseModel(memStore, 'base:')
 const obj = {foo:'bar'}
 
-runner([testCreate,testGet,testDel],function(err){
-    if(!err){
-       console.log('All done')
-    }
-})
-describe('model',function(){
+describe('baseModel',function(){
     it('could create',testCreate)
     it('could get',testGet)
     it('could del',testDel)

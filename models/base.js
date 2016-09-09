@@ -1,3 +1,4 @@
+// store:储存,prefix:前缀
 function BaseModel(store, prefix) {
     this.store = store
     this.prefix = prefix
@@ -14,8 +15,7 @@ BaseModel.prototype.get = function(id, callback){
 }
 
 BaseModel.prototype.update = function(id, obj, callback){
-    console.log(obj)
-    this.store.set(this.prefix + obj.id, obj, callback)    
+    this.store.set(this.prefix + id, obj, callback)    
 }
 BaseModel.prototype.del = function(id, callback){
     this.store.del(this.prefix + id, callback)    
