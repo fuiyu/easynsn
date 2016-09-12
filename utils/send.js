@@ -27,5 +27,5 @@ exports.redirect = function(location,res,statusCode){
 exports.sendError = function(err,res,statusCode){
     statusCode = statusCode || 500
     res.writeHead(statusCode)
-    res.end(err,message)
+    res.end(err.message)
 }

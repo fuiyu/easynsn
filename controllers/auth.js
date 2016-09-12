@@ -67,7 +67,7 @@ exports.register = function(req,res){
             if(err){
                 return send.sendError(err, res)
             }
-            send.redirect('/',res)
+            doLogin(user.id, res);
         })
     })
 }
