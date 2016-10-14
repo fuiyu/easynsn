@@ -26,12 +26,9 @@ exports.myavatar = function(req, res) {
         if(err ) {
             return send.sendError(err,res)
         }
-        // console.log('files',files)
-
         var newPath = files.file[0].path.replace(uploadDir,'')
         // console.log('newPath',newPath)
         var url = 'http://localhost:3000/upload/' + newPath
-        
         models.user.updatePart(req.userId, {avatar: url}, function(err, info){
             if(err){
                 send.sendError(err, res)

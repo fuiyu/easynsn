@@ -6,7 +6,7 @@ const models = require("../models")
 const crypto = require("crypto")
 const userModel = models.user
 const tokenModel = models.token
-
+// 生产token
 function generateToken(userId, callback){
     
     var token = crypto.randomBytes(16).toString('hex');
@@ -17,7 +17,7 @@ function generateToken(userId, callback){
         callback(null, token)
     })
 }
-
+// 用户已登陆返回302重定向到'/'，并生成登陆token
 function doLogin(userId, res){
     generateToken(userId, function(err, token){
         if(err){

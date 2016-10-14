@@ -1,40 +1,27 @@
-const assert = require('assert')
-const runner = require('../runner')
+// const assert = require('assert')
+// const runner = require('../runner')
+const expect = require('chai').expect
 const BaseModel = require('../../models/base')
 const MemStore = require('../../store/memstore')
 
 const memStore = new MemStore()
 const model = new BaseModel(memStore, 'base:')
-const obj = {foo:'bar'}
 
-describe('baseModel',function(){
-    it('could create',testCreate)
-    it('could get',testGet)
-    it('could del',testDel)
+describe('BaseModel',() => {
+    it('shold create without error', async ()=> {
+        const id = await model.create({foo:'bar'})
+        expect(id).to.be.ok
+    })
+    it('shold get by id', async ()=> {
+        const id = await model.create({foo:'bar'})
+        const result = await model.get(id)
+        expect(result).to.be.ok        
+        expect(result.foo).to.equal('bar')
+    })
+    it('shold get nothing after delete', async ()=> {
+        const id = await model.create({foo:'bar'})
+        await model.del(id)
+        const result = await model.get(id)
+        expect(result).not.to.be.ok      
+    })
 })
-function testCreate(done){
-    model.create(obj,function(err, result){
-        assert(!err)
-        assert(obj.id)
-        done()
-    })
-}
-
-function testGet(done){
-    model.get(obj.id, function(err, result){
-        assert(!err)
-        assert.equal(result.foo, 'bar')
-        done()
-    })
-}
-
-function testDel(done){
-    model.del(obj.id, function(err, result){
-        assert(!err)
-        memStore.get(obj.id, function(err, result){
-            assert(!err)
-            assert(!result)
-            done()
-        })
-    })
-}

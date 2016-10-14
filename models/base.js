@@ -1,34 +1,40 @@
 // store:储存,prefix:前缀
-function BaseModel(store, prefix) {
-    this.store = store
-    this.prefix = prefix
-}
-module.exports = BaseModel
+// function BaseModel(store, prefix) {
+//     this.store = store
+//     this.prefix = prefix
+// }
+class BaseModel {
+    constructor(store, prefix){
+        this.store = store
+        this.prefix = prefix
+    }
+    async create(obj){
+        obj.id = obj.id || Date.now()
+        await this.store.set(this.prefix + obj.id, obj)
+        return obj.id 
+    }
 
-BaseModel.prototype.create = function(obj, callback){
-    obj.id = obj.id || Date.now()
-    this.store.set(this.prefix + obj.id, obj, callback)
-}
+    async get(id){
+       return await this.store.get(this.prefix + id)
+    }
+    async update(id, obj){
+      await this.store.set(this.prefix + id, obj)    
+    }
 
-BaseModel.prototype.get = function(id, callback){
-    this.store.get(this.prefix + id, callback)
-}
+    async update(id, obj){
+       await this.store.set(this.prefix + id, obj)
+    }
 
-BaseModel.prototype.update = function(id, obj, callback){
-    this.store.set(this.prefix + id, obj, callback)    
-}
-BaseModel.prototype.updatePart = function(id, part, callback){
-    const self = this
-    this.get(id, function(err, result){
-        if(err || !result){
-            callback(err, result)
-        }
+    async updatePart(id, part){
+        const self =await this.get(id)
         // 此处的assign相当于merge
         Object.assign(result, part)
-        self.update(id, result,callback) 
-    })
+        await this.update(id, result) 
        
+    }
+
+    async del(id){
+        await this.store.del(this.prefix + id)
+    }
 }
-BaseModel.prototype.del = function(id, callback){
-    this.store.del(this.prefix + id, callback)    
-}
+module.exports = BaseModel
