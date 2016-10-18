@@ -4,7 +4,7 @@ const PREFIX_EMAIL_TO_ID = 'email-id:'
 class UserModel extends MongoBaseModel{
     init(collection){
         this.collection = collection
-        this.collection.createIndex({eamil:1},{unique:true}).then()
+        this.collection.createIndex({email:1},{unique:true}).then()
     }
     // create(obj){
     //     return await super.store.create({PREFIX_EMAIL_TO_ID + obj.email, obj.id})

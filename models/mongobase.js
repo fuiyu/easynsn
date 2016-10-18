@@ -4,7 +4,6 @@ class MongoBaseModel {
     init(collection){
         this.collection = collection
     }
-
     toId(id) {
         if(id instanceof ObjectID){
             return id
@@ -13,6 +12,8 @@ class MongoBaseModel {
     }
 
     async create(obj){
+        console.log(obj)
+        
         const insertResult = await this.collection.insertOne(obj)
         return insertResult && insertResult.insertedId
     }
