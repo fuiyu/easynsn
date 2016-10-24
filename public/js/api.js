@@ -73,11 +73,16 @@
   api.publish = function (content, callback) {
     var req = {}
     req.content = content
-    console.dir(req)
-    callback(null, {
-      avatar: 'http://localhost:3000/static/img/nodejs.png',
-      nickname: 'Demo User',
-      content: content
+    fetchJson('/activities', {
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body: JSON.stringify(req)
+    })(function (err, data) {
+      if (err) return callback(err)
+      callback(null, data)
     })
   }
 
@@ -86,15 +91,34 @@
     var req = {}
     req.userId = userId
     console.dir(req)
-    callback(null, req)
+    fetchJson('/rel/follow', {
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body:JSON.stringify(req)
+    })(function (err, data) {
+      if (err) return callback(err)
+      callback(null, data)
+    })
   }
-
   // 取消关注
   api.unfollow = function (userId, callback) {
     var req = {}
     req.userId = userId
     console.dir(req)
-    callback(null, req)
+    fetchJson('/rel/unfollow', {
+      headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+      },
+      method: 'POST',
+      body:JSON.stringify(req)
+    })(function (err, data) {
+      if (err) return callback(err)
+      callback(null, data)
+    })
   }
 
   // 获取文章列表
@@ -102,32 +126,36 @@
     var req = {}
     req.page = page
     req.limit = limit
+    
     console.dir(req)
-    callback(null, [/*{
-      avatar: 'http://localhost:3000/static/img/nodejs.png',
-      nickname: 'User 1',
-      content: '内容1'
-    }, {
-      avatar: 'http://localhost:3000/static/img/nodejs.png',
-      nickname: 'User 2',
-      content: '内容2'
-    }*/])
+    fetchJson('/activities?page='+page+'&limit='+limit, {
+      method: 'GET'
+    })(function (err, data) {
+      if (err) return callback(err)
+      callback(null, data)
+    })
   }
 
   // 获取用户列表
   api.getNewUsers = function (req, callback) {
     console.dir(req)
-    callback(null, [/*{
-      avatar: 'http://localhost:3000/static/img/nodejs.png',
-      nickname: 'User a',
-      userId: '3',
-      isFollow: true
-    }, {
-      avatar: 'http://localhost:3000/static/img/nodejs.png',
-      nickname: 'User b',
-      userId: '4',
-      isFollow: false
-    }*/])
+     fetchJson('/users', {
+      method: 'GET'
+    })(function (err, data) {
+      if (err) return callback(err)
+      callback(null, data)
+    })
+    // callback(null, [/*{
+    //   avatar: 'http://localhost:3000/static/img/nodejs.png',
+    //   nickname: 'User a',
+    //   userId: '3',
+    //   isFollow: true
+    // }, {
+    //   avatar: 'http://localhost:3000/static/img/nodejs.png',
+    //   nickname: 'User b',
+    //   userId: '4',
+    //   isFollow: false
+    // }*/])
   }
 
   return api

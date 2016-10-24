@@ -1,4 +1,6 @@
 /* global API UI alert */
+ var page = 1
+  var limit = 10
 ;(function () {
   // register()
   // login()
@@ -90,8 +92,9 @@
   function follow () {
     $('.follow').click(function () {
       var _this = $(this)
-      var userId = _this.attr('data-userId')
+      var userId = _this.attr('data-userid')
       var isFollow = _this.attr('data-isfollow')
+      // console.log(isFollow)
       if (!isFollow || isFollow === '0') {
         API.follow(userId, function (err, data) {
           if (err) {
@@ -141,9 +144,9 @@
   }
 
   // 获取列表
-  var page = 1
-  var limit = 10
+ 
   function getTimeline () {
+    console.log(page)
     API.getTimeline(page, limit, function (err, data) {
       if (err) {
         alert('获取失败')
@@ -173,7 +176,8 @@
           UI.addUser(item)
         })
       }
+      follow()
     })
-    follow()
+    
   }
 })()

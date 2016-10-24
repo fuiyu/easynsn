@@ -22,7 +22,6 @@ router.post('/register', async (ctx) => {
 router.post('/login', async (ctx) => {
     const body = ctx.request.body
     const user = await models.user.getByEmail(body.email)
-    const id = await models.user.create(user)
     if(!user){
         ctx.redirect('/?err=no_user')
         return
@@ -31,7 +30,7 @@ router.post('/login', async (ctx) => {
         ctx.redirect('/?err=invalid_pass')
         return
     }
-    ctx.session.userId = id
+    ctx.session.userId = user._id
     ctx.redirect('/')
 })
 

@@ -12,8 +12,6 @@ class MongoBaseModel {
     }
 
     async create(obj){
-        console.log(obj)
-        
         const insertResult = await this.collection.insertOne(obj)
         return insertResult && insertResult.insertedId
     }

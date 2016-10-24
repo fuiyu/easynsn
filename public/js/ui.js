@@ -19,9 +19,8 @@
       '<img src="' + data.avatar + '">' +
       '</div>' +
       '<div class="nickname">' + data.nickname + '</div>' +
-      '<div class="follow" data-userid="' + data.userId + '" data-isfollow="' + (data.isFollow ? '1' : '0') + '"">' + (data.isFollow ? '已关注' : '+ 关注') + '</div>' +
+      '<div class="follow" data-userid="' + data._id + '" data-isfollow="' + (data.isFollowing ? '1' : '0') + '"">' + (data.isFollowing ? '已关注' : '+ 关注') + '</div>' +
       '</div>'
-    console.log('ui add User', tpl)
     $('#userlist').prepend(tpl)
   }
 
@@ -30,11 +29,11 @@
     var tpl = '<div class="list-item">' +
       '<div class="list-user">' +
       '<div class="avatar">' +
-      '<img src="' + data.avatar + '">' +
+      '<img src="' + data.user.avatar + '">' +
       '</div>' +
-      '<div class="nickname">' + data.nickname + '</div>' +
+      '<div class="nickname">' + data.user.nickname + '</div>' +
       '</div>' +
-      '<div class="list-content">' + data.content + '</div>' +
+      '<div class="list-content">' + (data.content == null?'':data.content )+ '</div>' +
       '</div>'
 
     $('#list').prepend(tpl)
