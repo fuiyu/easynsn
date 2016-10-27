@@ -25,7 +25,8 @@
     "mongodb": "^2.2.10",
     "multiparty": "^4.1.2",
     "redis": "^2.6.2",
-    "runkoa": "^1.5.2"
+    "runkoa": "^1.5.2",
+    "ws": "^1.1.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",

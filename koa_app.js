@@ -24,13 +24,20 @@ app.use(mount('/static', require('koa-static')(__dirname + '/public')))
 app.use(mount('/upload', require('koa-static')(__dirname + '/data/upload')))
 app.use(bodyparser())
 app.use(json())
-app.use(session({
-    store:redisSessionStore({
-        // option
-        host:'localhost'
-    })
-}))
+// old sesion
+// app.use(session({
+//     store:redisSessionStore({
+//         // option
+//         host:'localhost'
+//     })
+// }))
+// new
+const sessionStore = redisSessionStore(
 
+)
+app.use(session({
+    store:sessionStore
+}))
 app.use(views(__dirname + '/views', {
     extension: 'html'
 }))
@@ -41,7 +48,15 @@ app.on('error',function(err, ctx){
     console.log(err)
     logger.error('server error', err, ctx)
 })
+// old(new to get websocket)
+// app.listen(3000)
 
-app.listen(3000)
+// new server
+const http = require('http')
+const server = http.createServer(app.callback())
+server.listen(3000)
+
+// init wsapp  ws is a websocket module
+require('./ws_app')(server, sessionStore, app.keys)
 
 module.exports = app

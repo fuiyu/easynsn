@@ -4,6 +4,7 @@ class ActivityModel extends MongoBaseModel{
     init (collection){
         this.collection = collection
         this.collection.createIndex({userId:-1}).then()
+        this.collection.createIndex({nickName:-1}).then()
     }
 
     findByAuthor (userId, skip = 0 ,limit = 100){
